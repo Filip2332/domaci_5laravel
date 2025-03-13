@@ -21,7 +21,7 @@
                 <td>{{$contact->subject}}</td>
                 <td>{{$contact->message}}</td>
                 <td>
-                    <a href="/admin/delete-contact/{{$contact->id}}">Delete</a>
+                    <a href="{{route("obrisiKontakt",["contact"=>$contact->id])}}" href="/admin/delete-contact/{{$contact->id}}">Delete</a>
                     <a>Edit</a>
                 </td>
             </tr>

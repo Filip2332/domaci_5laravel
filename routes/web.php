@@ -17,10 +17,26 @@ Route::post("/send-contact",[\App\Http\Controllers\ContactController::class,"sen
 
 Route::post("/admin/add-products",[\App\Http\Controllers\ShopController::class,'addProducts']);
 
+Route::post("/admin/save-product",[\App\Http\Controllers\ProductsController::class,'saveProduct']);
+
 Route::get("/shop",[\App\Http\Controllers\ShopController::class,'getAllProducts']);
 
-Route::get("/admin/all-products",[\App\Http\Controllers\ProductsController::class,'allProducts']);
+Route::get("/admin/all-products",[\App\Http\Controllers\ProductsController::class,'allProducts'])
+    ->name("sviProizvodi");
 
-Route::get("/admin/delete-product/{product}",[\App\Http\Controllers\ProductsController::class,"delete"]);
+Route::get("/admin/delete-product/{product}",[\App\Http\Controllers\ProductsController::class,"delete"])
+    ->name("obrisiProizvod");
 
-Route::get("/admin/delete-contact/{contact}",[\App\Http\Controllers\ContactController::class,"delete"]);
+Route::get("/admin/delete-contact/{contact}",[\App\Http\Controllers\ContactController::class,"delete"])
+    ->name("obrisiKontakt");
+
+Route::view("/admin/add-product","addProduct");
+
+Route::get("/admin/product/edit/{product}",[\App\Http\Controllers\ProductsController::class,"singleProduct"])
+    ->name("product.single");
+
+Route::post("/admin/product/save/{product}",[\App\Http\Controllers\ProductsController::class,"edit"])
+    ->name("product.save");
+
+
+require __DIR__.'/auth.php';

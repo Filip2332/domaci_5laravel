@@ -21,8 +21,8 @@
           <td>{{$product->description}}</td>
           <td>{{$product->price}}</td>
           <td>
-              <a href="/admin/delete-product/{{$product->id}}">Delete</a>
-              <a>Edit</a>
+              <a href="{{route("obrisiProizvod",["product"=>$product->id])}}" href="/admin/delete-product/{{$product->id}}">Delete</a>
+              <a href="{{route("product.single",["product"=>$product->id])}}">Edit</a>
           </td>
       </tr>
         @endforeach
