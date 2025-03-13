@@ -1,42 +1,49 @@
 <?php
 
+use App\Http\Controllers\ContactController;
+use App\Http\Controllers\HomeController;
+use App\Http\Controllers\ProductsController;
+use App\Http\Controllers\ShopController;
 use Illuminate\Support\Facades\Route;
 
-Route::get('/welcome',[\App\Http\Controllers\HomeController::class,'index']);
+Route::get('/welcome',[HomeController::class,'index']);
 
 Route::view('/about','about');
 
+Route::get('/kontakt',[ContactController::class,'index']);
 
-Route::get('/kontakt',[\App\Http\Controllers\ContactController::class,'index']);
+Route::post("/send-contact",[ContactController::class,"sendContact"]);
 
-
-
-Route::get("/admin/all-contacts",[\App\Http\Controllers\ContactController::class,"getAllContacts"]);
-
-Route::post("/send-contact",[\App\Http\Controllers\ContactController::class,"sendContact"]);
-
-Route::post("/admin/add-products",[\App\Http\Controllers\ShopController::class,'addProducts']);
-
-Route::post("/admin/save-product",[\App\Http\Controllers\ProductsController::class,'saveProduct']);
-
-Route::get("/shop",[\App\Http\Controllers\ShopController::class,'getAllProducts']);
-
-Route::get("/admin/all-products",[\App\Http\Controllers\ProductsController::class,'allProducts'])
-    ->name("sviProizvodi");
-
-Route::get("/admin/delete-product/{product}",[\App\Http\Controllers\ProductsController::class,"delete"])
-    ->name("obrisiProizvod");
-
-Route::get("/admin/delete-contact/{contact}",[\App\Http\Controllers\ContactController::class,"delete"])
-    ->name("obrisiKontakt");
+Route::get("/shop",[ShopController::class,'getAllProducts']);
 
 Route::view("/admin/add-product","addProduct");
 
-Route::get("/admin/product/edit/{product}",[\App\Http\Controllers\ProductsController::class,"singleProduct"])
-    ->name("product.single");
 
-Route::post("/admin/product/save/{product}",[\App\Http\Controllers\ProductsController::class,"edit"])
-    ->name("product.save");
+Route::middleware('auth')->prefix("admin")->group(function(){
+    Route::get("/all-contacts",[ContactController::class,"getAllContacts"]);
+
+    Route::post("/add-products",[ShopController::class,'addProducts']);
+
+    Route::post("/save-product",[ProductsController::class,'saveProduct']);
+
+    Route::get("/all-products",[ProductsController::class,'allProducts'])
+        ->name("sviProizvodi");
+
+    Route::get("/delete-product/{product}",[ProductsController::class,"delete"])
+        ->name("obrisiProizvod");
+
+    Route::get("/delete-contact/{contact}",[ContactController::class,"delete"])
+        ->name("obrisiKontakt");
+
+    Route::get("/product/edit/{product}",[ProductsController::class,"singleProduct"])
+        ->name("product.single");
+
+    Route::post("/product/save/{product}",[ProductsController::class,"edit"])
+        ->name("product.save");
+
+});
+
+
 
 
 require __DIR__.'/auth.php';
