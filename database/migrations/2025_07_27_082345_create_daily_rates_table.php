@@ -11,20 +11,19 @@ return new class extends Migration
      */
     public function up(): void
     {
-        if (!Schema::hasTable('contact')) {
-            Schema::create('contact', function (Blueprint $table) {
-                $table->id();
-                $table->timestamps();
-            });
-        }
+        Schema::create('daily_rates', function (Blueprint $table) {
+            $table->id();
+            $table->string("currency",10);
+            $table->decimal("value");
+            $table->timestamps();
+        });
     }
-
 
     /**
      * Reverse the migrations.
      */
     public function down(): void
     {
-        Schema::dropIfExists('contact');
+        Schema::dropIfExists('daily_rates');
     }
 };
