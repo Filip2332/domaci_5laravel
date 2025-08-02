@@ -3,10 +3,19 @@
 namespace App\Http\Controllers;
 
 use App\Models\ProductsModel;
+use App\Repositories\ProductRepository;
 use Illuminate\Http\Request;
 
 class ProductsController extends Controller
 {
+
+    private $productRepository;
+
+    public function __construct()
+    {
+        $this->productRepository = new ProductRepository();
+    }
+
     public function allProducts(){
         $allProducts = ProductsModel::all();
         return view("allProducts",compact('allProducts'));
@@ -19,12 +28,9 @@ class ProductsController extends Controller
             "amount"=>"required|min:0",
             "price"=>"required|min:0",
         ]);
-        ProductsModel::create([
-           "name"=>$request->get("name"),
-           "description"=>$request->get("description"),
-           "amount"=>$request->get("amount"),
-           "price"=>$request->get("price"),
-        ]);
+
+       $this->productRepository->createNew($request);
+
         return redirect()->route("sviProizvodi");
     }
     public function delete($product){

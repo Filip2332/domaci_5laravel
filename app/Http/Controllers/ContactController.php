@@ -24,12 +24,14 @@ class ContactController extends Controller
             "email" => "required|email", // Ispravljeno
             "subject" => "required|string",
             "description" => "required|string|min:5",
+            "message" => "required|string|min:5"
         ]);
 
         ContactModel::create([
             "email" => $request->get("email"),
             "subject" => $request->get("subject"),
-            "description" => $request->get("description"), // Proveri ime kolone u bazi
+            "description" => $request->get("description"),
+            "message" => $request->get("message"),
         ]);
 
         return redirect("/shop");
