@@ -4,10 +4,12 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\SendContactRequest;
 use App\Models\ContactModel;
+use App\repositories\ContactRepository;
 use Illuminate\Http\Request;
 
 class ContactController extends Controller
 {
+    private $contactRepository;
     public function index()
     {
         return view('kontakt'); // Ispravljena putanja
@@ -21,14 +23,7 @@ class ContactController extends Controller
 
     public function sendContact(SendContactRequest $request)
     {
-
-        ContactModel::create([
-            "email" => $request->get("email"),
-            "subject" => $request->get("subject"),
-            "description" => $request->get("description"),
-            "message" => $request->get("message"),
-        ]);
-
+        $this->contactRepository = new ContactRepository();
         return redirect("/shop");
     }
 
