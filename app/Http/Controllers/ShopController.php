@@ -28,7 +28,7 @@ class ShopController extends Controller
             "name" => $request->get("name"),
             "description" => $request->get("description"),
             "amount" => $request->get("amount"),
-            "price" => $request->get("price"),
+            "price" => $request->get(" price"),
         ]);
 
         return redirect("/admin/all-products");
