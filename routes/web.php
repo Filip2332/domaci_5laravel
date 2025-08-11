@@ -36,10 +36,10 @@ Route::middleware("auth")->prefix("admin")->group(function(){
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 
 
-    Route::controller(ContactController::class)->group(function(){
-        Route::get("/contact/all","getAllContacts");
-        Route::post("/contact/send","sendContact")->name("sendContact");
-        Route::delete("/contact/delete/{contact}","deleteContact")->name("obrisiKontakt");
+    Route::controller(ContactController::class)->prefix("/contact")->group(function(){
+        Route::get("/all","getAllContacts");
+        Route::post("/send","sendContact")->name("sendContact");
+        Route::delete("/delete/{contact}","deleteContact")->name("obrisiKontakt");
     });
 
     Route::controller(ProductsController::class)->group(function(){
