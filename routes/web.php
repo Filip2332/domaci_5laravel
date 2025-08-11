@@ -20,8 +20,6 @@ Route::view('/about','about');
 
 Route::get('/kontakt',[ContactController::class,'index']);
 
-Route::post("/send-contact",[ContactController::class,"sendContact"]);
-
 Route::get("/shop",[ShopController::class,'getAllProducts']);
 
 Route::view("/admin/add-product","addProduct");
@@ -37,26 +35,22 @@ Route::middleware("auth")->prefix("admin")->group(function(){
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 
-    Route::get("/all-contacts",[ContactController::class,"getAllContacts"]);
 
-    Route::post("/add-products",[ShopController::class,'addProducts']);
+    Route::controller(ContactController::class)->group(function(){
+        Route::get("/contact/all","getAllContacts");
+        Route::post("/contact/send","sendContact")->name("sendContact");
+        Route::delete("/contact/delete/{contact}","deleteContact")->name("obrisiKontakt");
+    });
 
-    Route::post("/save-product",[ProductsController::class,'saveProduct']);
+    Route::controller(ProductsController::class)->group(function(){
+       Route::get("all-products","getAllProducts")->name("sviProizvodi");
+       Route::post("add-products","addProducts");
+       Route::post("save-product","saveProduct");
+       Route::get("product/edit/{product}","singleProduct")->name("product.single");
+       Route::get("product/delete/{product}","delete")->name("obrisiProizvod");
+       Route::post("product/save/{product}","edit")->name("product.save");
+    });
 
-    Route::get("/all-products",[ProductsController::class,'allProducts'])
-        ->name("sviProizvodi");
-
-    Route::get("/delete-product/{product}",[ProductsController::class,"delete"])
-        ->name("obrisiProizvod");
-
-    Route::get("/delete-contact/{contact}",[ContactController::class,"delete"])
-        ->name("obrisiKontakt");
-
-    Route::get("/product/edit/{product}",[ProductsController::class,"singleProduct"])
-        ->name("product.single");
-
-    Route::post("/product/save/{product}",[ProductsController::class,"edit"])
-        ->name("product.save");
 
 });
 

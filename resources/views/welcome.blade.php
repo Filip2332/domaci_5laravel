@@ -30,7 +30,7 @@
                 </div>
             @endif
 
-            <form method="POST" action="/send-contact">
+            <form method="POST" action="{{ route("sendContact") }}">
                 {{ csrf_field() }}
 
                 <div class="mb-3">
