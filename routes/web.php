@@ -39,7 +39,7 @@ Route::middleware("auth")->prefix("admin")->group(function(){
     Route::controller(ContactController::class)->prefix("/contact")->group(function(){
         Route::get("/all","getAllContacts");
         Route::post("/send","sendContact")->name("sendContact");
-        Route::delete("/delete/{contact}","deleteContact")->name("obrisiKontakt");
+        Route::delete("/delete/{contact}","deleteContact")->name("deleteContact");
     });
 
     Route::controller(ProductsController::class)->prefix("/products")->group(function(){
