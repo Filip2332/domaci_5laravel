@@ -42,19 +42,17 @@ Route::middleware("auth")->prefix("admin")->group(function(){
         Route::delete("/delete/{contact}","deleteContact")->name("obrisiKontakt");
     });
 
-    Route::controller(ProductsController::class)->group(function(){
-       Route::get("all-products","getAllProducts")->name("sviProizvodi");
-       Route::post("add-products","addProducts");
-       Route::post("save-product","saveProduct");
-       Route::get("product/edit/{product}","singleProduct")->name("product.single");
-       Route::get("product/delete/{product}","delete")->name("obrisiProizvod");
-       Route::post("product/save/{product}","edit")->name("product.save");
+    Route::controller(ProductsController::class)->prefix("/products")->group(function(){
+       Route::get("/all","allProducts")->name("sviProizvodi");
+       Route::post("/add","addProducts");
+       Route::post("/save","saveProduct");
+       Route::get("/edit/{product}","singleProduct")->name("product.single");
+       Route::get("delete/{product}","delete")->name("obrisiProizvod");
+       Route::post("save/{product}","edit")->name("product.save");
     });
 
 
 });
-
-
 
 
 require __DIR__.'/auth.php';
