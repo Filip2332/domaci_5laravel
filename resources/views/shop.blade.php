@@ -8,7 +8,7 @@ Shop
 @section("sadrzajStranice")
 
 
-<form method="post" action="/admin/add-products">
+<form method="post" action={{ route('saveProduct') }}>
     @if($errors->any())
         <p>Error: {{$errors->first()}}</p>
     @endif

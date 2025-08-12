@@ -4,7 +4,6 @@ use App\Http\Controllers\ContactController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\ProductsController;
 use App\Http\Controllers\ShopController;
-use App\Http\Middleware\AdminCheck;
 use Illuminate\Support\Facades\Route;
 
 
@@ -31,9 +30,9 @@ Route::get('/dashboard', function () {
 
 Route::middleware("auth")->prefix("admin")->group(function(){
 
-    Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
-    Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
-    Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+    //Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
+    //Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
+    //Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 
 
     Route::controller(ContactController::class)->prefix("/contact")->group(function(){
@@ -43,13 +42,14 @@ Route::middleware("auth")->prefix("admin")->group(function(){
     });
 
     Route::controller(ProductsController::class)->prefix("/products")->group(function(){
-       Route::get("/all","allProducts")->name("sviProizvodi");
-       Route::post("/add","addProducts");
-       Route::post("/save","saveProduct");
-       Route::get("/edit/{product}","singleProduct")->name("product.single");
-       Route::get("delete/{product}","delete")->name("obrisiProizvod");
-       Route::post("save/{product}","edit")->name("product.save");
+        Route::get("/all","allProducts")->name("allProducts");
+        Route::post("/add","addProducts")->name("addProduct");
+        Route::post("/save","saveProduct")->name("saveProduct");
+        Route::get("/edit/{product}","singleProduct")->name("singleProduct");
+        Route::get("delete/{product}","delete")->name("deleteProduct");
+        Route::post("save/{product}","edit")->name("editProduct");
     });
+
 
 
 });

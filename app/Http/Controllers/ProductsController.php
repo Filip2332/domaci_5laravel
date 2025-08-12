@@ -27,7 +27,7 @@ class ProductsController extends Controller
 
        $this->productRepository->createNew($request);
 
-        return redirect()->route("sviProizvodi");
+        return redirect()->route("allProducts");
     }
     public function delete(ProductsModel $product){
 
@@ -40,10 +40,12 @@ class ProductsController extends Controller
     }
     public function edit(EditProductRequest $request, ProductsModel $product){
 
+dd('stigao');
+
 
         $this->productRepository->editProduct($request, $product);
 
-        return redirect()->route("sviProizvodi");
+        return redirect()->route("allProducts");
     }
 
 }
