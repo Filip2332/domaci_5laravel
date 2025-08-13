@@ -23,6 +23,7 @@
           <td>
               <a href="{{route("deleteProduct",["product"=>$product->id])}}" href="/admin/delete-product/{{$product->id}}">Delete</a>
               <a href="{{route("singleProduct",["product"=>$product->id])}}">Edit</a>
+              <a href="{{ route("productsPermalink",['product' => $product->id]) }}">More</a>
           </td>
       </tr>
         @endforeach
