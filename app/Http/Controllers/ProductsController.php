@@ -44,8 +44,6 @@ class ProductsController extends Controller
     }
     public function edit(EditProductRequest $request, ProductsModel $product){
 
-dd('stigao');
-
 
         $this->productRepository->editProduct($request, $product);
 
