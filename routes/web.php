@@ -13,13 +13,16 @@ Route::get('/', function () {
     return redirect('/welcome');
 });
 
+
+Route::get("/shop",[ShopController::class,'getAllProducts']);
 Route::get('/welcome',[HomeController::class,'index']);
+
+Route::get("/products/{product}",[ProductsController::class,'permalink'])->name('productsPermalink');
 
 Route::view('/about','about');
 
 Route::get('/kontakt',[ContactController::class,'index']);
 
-Route::get("/shop",[ShopController::class,'getAllProducts']);
 
 Route::view("/admin/add-product","addProduct");
 
@@ -33,6 +36,8 @@ Route::middleware("auth")->prefix("admin")->group(function(){
     //Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     //Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     //Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+
+
 
 
     Route::controller(ContactController::class)->prefix("/contact")->group(function(){
