@@ -23,7 +23,7 @@ Route::view('/about','about');
 
 Route::get('/kontakt',[ContactController::class,'index']);
 
-Route::post("/cart/add",[ShopController::class,'addToCart'])->name("cartAdd");
+Route::post("/cart/add",[\App\Http\Controllers\ShopingCartController::class,'addToCart'])->name("cartAdd");
 
 Route::view("/admin/add-product","addProduct");
 
