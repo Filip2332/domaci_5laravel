@@ -11,15 +11,19 @@ class ShopingCartController extends Controller
 
     public function index()
     {
-        return view('cart',[
-            'cart' => Session::get('product')
-        ]);
+        $cart = Session::get('product', []);
+        return view('cart', ['cart' => $cart]);
     }
-    public function addToCart(CartAddRequest $request){
-        Session::put('product', [
-            $request->id => $request->amount
-        ]);
 
+
+    public function addToCart(CartAddRequest $request){
+        $cart = Session::get('product', []);
+        $cart[] = [
+            'product_id' => $request->id,
+            'amount' => $request->amount,
+        ];
+        Session::put('product', $cart);
         return redirect()->route('cartIndex');
     }
+
 }
