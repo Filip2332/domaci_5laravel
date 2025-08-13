@@ -24,6 +24,7 @@ Route::view('/about','about');
 Route::get('/kontakt',[ContactController::class,'index']);
 
 Route::post("/cart/add",[\App\Http\Controllers\ShopingCartController::class,'addToCart'])->name("cartAdd");
+Route::get("/cart",[\App\Http\Controllers\ShopingCartController::class,'index'])->name("cartIndex");
 
 Route::view("/admin/add-product","addProduct");
 

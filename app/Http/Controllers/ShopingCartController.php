@@ -8,9 +8,18 @@ use Illuminate\Support\Facades\Session;
 
 class ShopingCartController extends Controller
 {
+
+    public function index()
+    {
+        return view('cart',[
+            'cart' => Session::get('product')
+        ]);
+    }
     public function addToCart(CartAddRequest $request){
         Session::put('product', [
             $request->id => $request->amount
         ]);
+
+        return redirect()->route('cartIndex');
     }
 }
