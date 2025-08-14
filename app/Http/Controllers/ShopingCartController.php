@@ -12,8 +12,19 @@ class ShopingCartController extends Controller
 
     public function index()
     {
-        $cart = Session::get('product', []);
-        return view('cart', ['cart' => $cart]);
+        $allProducts = [];
+
+        foreach (Session::get('product',[]) as $cartItem){
+            $allProducts[] = $cartItem['product_id'];
+        }
+
+        $products = ProductsModel::whereIn("id",$allProducts)->get();
+
+
+        return view('cart', [
+            'cart' => Session::get('product'),
+            'products' => $products,
+        ]);
     }
 
 
