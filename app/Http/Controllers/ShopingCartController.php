@@ -4,41 +4,35 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\CartAddRequest;
 use App\Models\ProductsModel;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
 
 class ShopingCartController extends Controller
 {
-
     public function index()
     {
+        $cart = Session::get('product', []);
+        $ids = array_column($cart, 'product_id');
 
-        $allProducts = array_column(Session::get('product', []), 'product_id');
+        $products = ProductsModel::whereIn('id', $ids)->get()->map(function ($p) use ($cart) {
+            $p->cart_amount = collect($cart)->firstWhere('product_id', $p->id)['amount'] ?? 0;
+            return $p;
+        });
 
-        $products = ProductsModel::whereIn('id', $allProducts)->get();
-
-
-        return view('cart', [
-            'cart' => Session::get('product'),
-            'products' => $products,
-        ]);
+        return view('cart', compact('products'));
     }
 
+    public function addToCart(CartAddRequest $request)
+    {
+        $product = ProductsModel::find($request->id);
+        if ($product->amount < $request->amount) return back();
 
-    public function addToCart(CartAddRequest $request){
-        $product = ProductsModel::where(['id' => $request->id])->first();
-
-        if($product->amount < $request->amount){
-            return redirect()->back();
-        }
-
-        $cart = Session::get('product', []);
-        $cart[] = [
+        Session::push('product', [
             'product_id' => $request->id,
-            'amount' => $request->amount,
-        ];
-        Session::put('product', $cart);
+            'amount' => $request->amount
+        ]);
+
         return redirect()->route('cartIndex');
     }
-
 }
+
+

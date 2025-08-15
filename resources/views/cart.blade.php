@@ -1,18 +1,15 @@
 @extends("layout")
 
-@section("naslovStranice")
-    Cart
-@endsection
+@section("naslovStranice", "Cart")
 
 @section("sadrzajStranice")
     @foreach($products as $product)
-        @foreach($cart as $item)
-            @if($item['product_id'] == $product->id)
-                <p>{{ $product->name }}</p>
-                <p>{{ $item['amount'] }}</p>
-                <p>{{ $product->price }}</p>
-                <p>{{ $item['amount']*$product->price }}</p>
-            @endif
-        @endforeach
+        <p>{{ $product->name }}</p>
+        <p>{{ $product->cart_amount }}</p>
+        <p>{{ $product->price }}</p>
+        <p>{{ $product->cart_amount * $product->price }}</p>
     @endforeach
 @endsection
+
+
+
