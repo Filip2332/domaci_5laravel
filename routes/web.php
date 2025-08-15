@@ -16,6 +16,7 @@ Route::get('/', function () {
 
 Route::get("/shop",[ShopController::class,'getAllProducts']);
 Route::get('/welcome',[HomeController::class,'index']);
+Route::get('/cart/finish',[\App\Http\Controllers\ShopingCartController::class,'cartFinish'])->name('cartFinish');
 
 Route::get("/products/{product}",[ProductsController::class,'permalink'])->name('productsPermalink');
 
