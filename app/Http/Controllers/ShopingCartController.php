@@ -13,7 +13,7 @@ class ShopingCartController extends Controller
 {
     public function index()
     {
-        $korpa = Session::get('product',[]);
+        $korpa = Session::get('product', []);
 
         if (count($korpa) == 0) {
             return redirect('/');
@@ -45,11 +45,14 @@ class ShopingCartController extends Controller
 
     public function cartFinish()
     {
-        $korpa = Session::get('product');
+        $korpa = Session::get('product', []);
         $totalCartPrice = 0;
 
         foreach ($korpa as $item) {
             $product = ProductsModel::firstWhere(['id' => $item['product_id']]);
+            if (!$product) {
+                return redirect()->back()->with('error', 'Product is not find.');
+            }
             $totalCartPrice += $item['amount'] * $product['price'];
 
             if ($item['amount'] > $product->amount) {
@@ -71,15 +74,24 @@ class ShopingCartController extends Controller
             }
         }
 
-        OrderItems::create([
-            'order_id' => $order->id,
-            'product_id' => $product->id,
-            'amount' => $item['amount'],
-            'price' => $totalCartPrice,
-        ]);
-        Session::remove('product');
+        foreach ($korpa as $item) {
+            $product = ProductsModel::firstWhere(['id' => $item['product_id']]);
+            $product->amount -= $item['amount'];
+            $product->save();
 
-        return view('thankyou');
+            if ($item['amount'] > $product->amount) {
+                return redirect()->back();
+            }
+            OrderItems::create([
+                'order_id' => $order->id,
+                'product_id' => $product->id,
+                'amount' => $item['amount'],
+                'price' => $totalCartPrice,
+            ]);
+            Session::remove('product');
+
+            return view('thankyou');
+        }
     }
 }
 

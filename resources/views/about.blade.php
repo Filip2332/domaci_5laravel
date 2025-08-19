@@ -5,7 +5,7 @@ About
 @endsection
 
 @section("sadrzajStranice")
-    <p>Ovo je moja stranica</p>
+    <h2>Shop n Go is a free website where you can purchase and sell products</h2>
 @endsection
 
 
