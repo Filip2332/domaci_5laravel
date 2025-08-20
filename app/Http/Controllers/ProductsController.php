@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\EditProductRequest;
 use App\Http\Requests\SaveProductRequest;
+use App\Models\OrderItems;
 use App\Models\ProductsModel;
 use App\Repositories\ProductRepository;
 use Illuminate\Http\Request;
@@ -33,11 +34,15 @@ class ProductsController extends Controller
 
         return redirect()->route("allProducts");
     }
-    public function delete(ProductsModel $product){
+    public function delete(ProductsModel $product)
+    {
+        OrderItems::where('product_id', $product->id)->delete();
 
         $product->delete();
-        return redirect()->back();
+
+        return redirect()->back()->with('success', 'Proizvod je uspešno obrisan!');
     }
+
     public function singleProduct(ProductsModel $product){
 
         return view("products.edit",compact('product'));

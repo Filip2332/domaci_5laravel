@@ -3,13 +3,28 @@
 @section("naslovStranice", "Cart")
 
 @section("sadrzajStranice")
-    @foreach($products as $product)
-        <p>{{ $product->name }}</p>
-        <p>Amount: {{ $product->cart_amount }} euros</p>
-        <p>Item price: {{ $product->price }} euros</p>
-        <p>Order price:  {{ $product->cart_amount * $product->price }} euros</p>
-    @endforeach
+    <table border="1" cellpadding="10">
+        <thead>
+        <tr>
+            <th>Name</th>
+            <th>Amount</th>
+            <th>Item price</th>
+            <th>Order price</th>
+        </tr>
+        </thead>
+        <tbody>
+        @foreach($products as $product)
+            <tr>
+                <td>{{ $product->name }}</td>
+                <td>{{ $product->cart_amount }} euros</td>
+                <td>{{ $product->price }} euros</td>
+                <td>{{ $product->cart_amount * $product->price }} euros</td>
+            </tr>
+        @endforeach
+        </tbody>
+    </table>
 @endsection
+
 
 
 
