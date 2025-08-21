@@ -13,17 +13,29 @@
         </tr>
         </thead>
         <tbody>
+        @php $total = 0; @endphp
+
         @foreach($products as $product)
+            @php
+                $orderPrice = $product->cart_amount * $product->price;
+                $total += $orderPrice;
+            @endphp
             <tr>
                 <td>{{ $product->name }}</td>
-                <td>{{ $product->cart_amount }} euros</td>
+                <td>{{ $product->cart_amount }}</td>
                 <td>{{ $product->price }} euros</td>
-                <td>{{ $product->cart_amount * $product->price }} euros</td>
+                <td>{{ $orderPrice }} euros</td>
             </tr>
         @endforeach
+
+        <tr>
+            <td colspan="3" align="right"><strong>Total:</strong></td>
+            <td><strong>{{ $total }} euros</strong></td>
+        </tr>
         </tbody>
     </table>
 @endsection
+
 
 
 

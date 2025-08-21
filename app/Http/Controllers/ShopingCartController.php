@@ -33,7 +33,9 @@ class ShopingCartController extends Controller
     public function addToCart(CartAddRequest $request)
     {
         $product = ProductsModel::find($request->id);
-        if ($product->amount < $request->amount) return back();
+        if ($request->amount > $product->amount) {
+            return redirect()->back()->with('error', 'Not enough products in stock!');
+        }
 
         Session::push('product', [
             'product_id' => $request->id,
@@ -92,7 +94,21 @@ class ShopingCartController extends Controller
 
             return view('thankyou');
         }
+
     }
+    public function removeFromCart($id)
+    {
+        $cart = Session::get('product', []);
+
+        $cart = array_filter($cart, function($item) use ($id) {
+            return $item['product_id'] != $id;
+        });
+
+        Session::put('product', $cart);
+
+        return back()->with('success', 'Product removed from cart.');
+    }
+
 }
 
 

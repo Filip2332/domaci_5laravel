@@ -11,7 +11,17 @@
             Contact Us!
         </h1>
 
-        <form style="background: #f9f9f9; padding: 30px; border-radius: 10px; box-shadow: 0 4px 10px rgba(0,0,0,0.1); width: 350px; display: flex; flex-direction: column; gap: 15px;">
+        @if(session('success'))
+            <div style="margin-bottom: 20px; padding: 10px; background: #d4edda; color: #155724; border: 1px solid #c3e6cb; border-radius: 5px; text-align: center;">
+                {{ session('success') }}
+            </div>
+        @endif
+
+
+        <form method="POST" action="{{ route('contact.send') }}"
+              style="background: #f9f9f9; padding: 30px; border-radius: 10px; box-shadow: 0 4px 10px rgba(0,0,0,0.1); width: 350px; display: flex; flex-direction: column; gap: 15px;">
+            @csrf
+
 
             <input type="email" placeholder="Email"
                    style="padding: 10px; border: 1px solid #ccc; border-radius: 5px;">

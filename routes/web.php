@@ -53,6 +53,8 @@ Route::middleware("auth")->prefix("admin")->group(function(){
         Route::post("/cart/add",[ShopingCartController::class,'addToCart'])->name("cartAdd");
         Route::get("/cart",[ShopingCartController::class,'index'])->name("cartIndex");
         Route::get('/cart/finish',[ShopingCartController::class,'cartFinish'])->name('cartFinish');
+        Route::get('/cart/remove/{id}', [ShopingCartController::class, 'removeFromCart'])->name('cartRemove');
+        Route::post('/contact/send', [ContactController::class, 'send'])->name('contact.send');
     });
 
 

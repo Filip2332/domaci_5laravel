@@ -26,6 +26,12 @@ class ContactController extends Controller
         $this->contactRepository = new ContactRepository();
         return redirect("/shop");
     }
+    public function send(Request $request)
+    {
+
+        return back()->with('success', 'Your message has been sent successfully. We will reply as soon as possible.');
+    }
+
 
     public function delete(ContactModel $contact)
     {
